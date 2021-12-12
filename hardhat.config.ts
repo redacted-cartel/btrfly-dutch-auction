@@ -25,6 +25,7 @@ const accounts = {
 import "./cli";
 
 const config: HardhatUserConfig = {
+  
   defaultNetwork: "hardhat",
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
@@ -117,7 +118,12 @@ const config: HardhatUserConfig = {
     ),
   },
   solidity: {
-    version: "0.6.12",
+
+    compilers: [
+      {
+        version: "0.6.12"
+      }
+    ],
     settings: {
       optimizer: {
         enabled: true,
