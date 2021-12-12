@@ -155,7 +155,7 @@ contract DutchAuction is IMisoMarket, MISOAccessControls, BoringBatchable, SafeT
         require(_minimumPrice > 0, "DutchAuction: minimum price must be greater than 0"); 
         require(_admin != address(0), "DutchAuction: admin is the zero address");
         require(_wallet != address(0), "DutchAuction: wallet is the zero address");
-        require(IERC20(_token).decimals() == 18, "DutchAuction: Token does not have 18 decimals");
+        require(IERC20(_token).decimals() == 9, "DutchAuction: Token does not have 9 decimals");
         if (_paymentCurrency != ETH_ADDRESS) {
             require(IERC20(_paymentCurrency).decimals() > 0, "DutchAuction: Payment currency is not ERC20");
         }
@@ -207,7 +207,7 @@ contract DutchAuction is IMisoMarket, MISOAccessControls, BoringBatchable, SafeT
      */
     function tokenPrice() public view returns (uint256) {
         return uint256(marketStatus.commitmentsTotal)
-            .mul(1e18).div(uint256(marketInfo.totalTokens));
+               .mul(1e9).div(uint256(marketInfo.totalTokens));        
     }
 
     /**
@@ -361,7 +361,7 @@ contract DutchAuction is IMisoMarket, MISOAccessControls, BoringBatchable, SafeT
      * @return Number of tokens committed.
      */
     function totalTokensCommitted() public view returns (uint256) {
-        return uint256(marketStatus.commitmentsTotal).mul(1e18).div(clearingPrice());
+        return uint256(marketStatus.commitmentsTotal).mul(1e9).div(clearingPrice());
     }
 
     /**
@@ -370,7 +370,7 @@ contract DutchAuction is IMisoMarket, MISOAccessControls, BoringBatchable, SafeT
      * @return committed Amount allowed to commit.
      */
     function calculateCommitment(uint256 _commitment) public view returns (uint256 committed) {
-        uint256 maxCommitment = uint256(marketInfo.totalTokens).mul(clearingPrice()).div(1e18);
+        uint256 maxCommitment = uint256(marketInfo.totalTokens).mul(clearingPrice()).div(1e9);
         if (uint256(marketStatus.commitmentsTotal).add(_commitment) > maxCommitment) {
             return maxCommitment.sub(uint256(marketStatus.commitmentsTotal));
         }
