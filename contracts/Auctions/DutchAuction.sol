@@ -171,7 +171,7 @@ contract DutchAuction is IMisoMarket, MISOAccessControls, BoringBatchable, SafeT
         paymentCurrency = _paymentCurrency;
         wallet = _wallet;
 
-        _setList(_pointList);
+
         _safeTransferFrom(_token, _funder, _totalTokens);
     }
 
